@@ -1,0 +1,29 @@
+Technical specifications:
+-------------------------
+We need to identify the entities - (possible nouns)
+
+- Company
+- Department
+- Employee
+- Customer
+- Subject area
+
+
+Now the relations between entities
+
+- Employee works in one Department
+- Employee has expertise in certain "Subject Areas"
+- Company gets paid for the services from the Customer
+- Employee get paid for the Services from the Company
+- Customer fills in feedback about his/her experience with the Employee
+- Customer gets feedback from the employee
+- Customer gets rating based on billing history and frequency
+
+- Transaction 
+  - Hire an employee for different services
+  - Release an employee once the services are completed.
+- Transaction 
+ - Billing
+ - Payment of charges
+ 
+

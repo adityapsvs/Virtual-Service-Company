@@ -1,0 +1,38 @@
+
+Certain Assumptions to elaborate problem summary:
+-------------------------------------------------
+Note: These documents are draft, so they are subjected to change.
+
+
+1. The name of the company "V Services Co.". It can just be referred as "Company" in anywhere in the documents.
+
+2. We have to develop an application for the Company. 
+
+3. The name of the application we develop - "VIS" stands for "V Information System" referred as VIS or just application.
+
+4. Through Vis, the company employees, should be able to maintain the following features specified in the business specifications: 
+
+Business specifications for the application.
+-------------------------------------------
+- Employees who works for the company.
+- Different services (we call "Subject area") Specializations offered by the Company
+- Company has 2 departments, "Administration", "Services".
+- There should be a flexibility to increase the number of departments.
+- Each employee belongs to only one department.
+- Any employee in "Services" department should be expert in one or more "Subject area".
+- Employees belong to "Administration", stays in the office (internal).
+- "Administrative staff" employees take orders, assign staff to customers, deal with billing and billing issues.
+- Let us use only one phrase - "subject_area" and not "professional services", not "expertise" or any other phrases.
+- Customers are offered the "services" in one or more "subject areas".
+- Customers have to reserve for the "services".
+- Customers are billed for the "services".
+- Customers have to cancel the services at least 48 hours before the service scheduled time.
+- Customers can pay the charges either through cash or credit card.
+- Customers have to prepay 50% of the estimated charges.
+- Customers will be given rating, based on their frequent usage of services, and payment history.
+- Remaining balances (and any other charges) will be paied within 48 hours of the completion of the service.
+- Reports have to be sent to the company management about the due customers.
+- Feedback from the customers will be taken on the level of satisfaction of the customers.
+- Employees will be rated based on the customers feedback.
+- Monthly, Yearly reports of the sales, and employee feedback for the analytical purposes to management.
+

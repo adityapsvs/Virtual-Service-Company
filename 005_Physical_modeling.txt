@@ -1,0 +1,104 @@
+Physical implementation (Oracle)
+-----------------------
+For ALL objects we will have a prefix of "VI".
+For each object, use a prefix as below - 
+
+Sequence - SQ
+Sequence name to should be same as the name of the column that this sequence is used to populate.
+
+Before Statement trigger - BS
+After Statement trigger AS
+
+Before EACH ROW Trigger - BR
+After EACH row trigger - AR
+
+Tables - 
+For any maint tables - use the suffix _M
+For any mapping tables (Relation tables) use the suffix _P (to indicate map)
+For any look up tables use the suffix _R (Reference)
+For any log tables use the suffix _L (to indicate log)
+
+This will help to separate any other application objects present in the same database.
+
+
+1. Create a tablespace VI_DATA_TS
+Data file: VI_DATA_DF01 (c:\oracle\vis_data_df01)
+
+2. Create a schema (User VI_OWNR)
+This schema (user) will own all the objects (tables, sequences, procedures, functions and all other objects) that we are going to create.
+Make sure to assign the "DEFAULT TABLESPACE" for this user VI_OWNR.
+
+Create all the below objects in that schema VI_OWNR.
+
+Table: vi_compny_m (Company Master)
+--------------------------------
+compny_legl_Nm     VARCHAR2(32) NOT NULL
+compny_desc        VARCHAR2(1024) NOT NULL
+compny_start_dtm   DATE NOT NULL
+compny_email_addr  VARCHAR2(64) NOT NULL
+
+Define primary key on compny_legl_nm
+All columns to be defined as not null
+
+In this table, there will ONLY be one record for the entire company.
+Since, this will only have one record, we can insert the record ahead of the time if we know the data.
+So, once the record is inserted, we can create a trigger not to allow any inserts, updates, deletes.
+
+Trigger - vi_compny_bs
+- Allow no inserts, no updates, no deletes.
+
+If we ever need to update the compny_email_addr or company_desc, then we have to disable the trigger, and make modifications and re-enable it.
+This is a manual process, there will be no screen developed for this.
+
+
+vi_dept_m
+dept_id   NUMBER(1) NOT NULL
+dept_nm   VARCHAR2(32) NOT NULL
+dept_mgr_emp_id NUMBER(2) NOT NULL (this not null constraint may have to incorporated later)
+
+Define dept_id as the primary key.
+Define dept_nm as the unique key.
+
+By keeping the head_emp_id, we are restricting that there can ONLY be one manager to each department.
+Since by now, we did not create the vi_emp_m table, it is not possible to establish a relation between this table, and the vi_emp_m table.
+
+
+
+vi_emp_m
+emp_id NUMBER(2) NOT NULL -- This column is generated using a sequence "vi_emp_id_sq"
+emp_nm VARCHAR2(32) NOT NULL
+emp_addr VARCHAR2(128) NOT NULL -- currently we are not storing each line of the address, and city etc separately. That will be done in phase 2
+emp_join_dt DATE NOT NULL -- this field is used to store only the DATE part (no time part)
+hrly_pmt_amt NUMBER(5,2) NOT NULL -- We assume the employees paid by hour, so hourly pmt_amt, Also, we need to ensure, each employee salary is not visible to others.
+dept_id NUMBER(1) NOT NULL -- this references to the vi_dept_m table dept_id column.
+
+
+vi_serv
+
+Subject area
+ - Name
+ - Hourly Rate
+ - Minimum Hours
+
+ 
+Customer
+ - Name
+ - Address
+ - Email Address
+ - Phone Number
+ 
+
+Transaction
+ - Transaction Date
+ - Customer
+ - Assigned Employee
+ - Scheduled Service (Subject Area)
+ - Scheduled Date and Time
+ - Finished Date and Time
+ - Scheduled hours
+ - Total amount
+ - Amount Paid
+ - Amount Paid Date
+ - Amount due
+ 
+ 

@@ -1,0 +1,45 @@
+Attributes of various Entities
+-------------------------------
+
+Company
+ - Name
+ - Start Date
+ - Description
+ - Contact Email Address
+
+Department
+ - Name
+ - Head
+
+Subject area
+ - Name
+ - Hourly Rate
+ - Minimum Hours
+
+Employee
+ - Name
+ - Date of birth
+ - Join Date
+ - Department Name
+ 
+Customer
+ - Name
+ - Address
+ - Email Address
+ - Phone Number
+ 
+
+Transaction
+ - Transaction Date
+ - Customer
+ - Assigned Employee
+ - Scheduled Service (Subject Area)
+ - Scheduled Date and Time
+ - Finished Date and Time
+ - Scheduled hours
+ - Total amount
+ - Amount Paid
+ - Amount Paid Date
+ - Amount due
+ 
+ 

@@ -1,0 +1,69 @@
+identifier_table
+id	entity
+1	student
+2	employee
+3	student
+4	customer
+
+bir on employee table
+DECLARE n NUMBER;
+BEGIN
+n := gen_seq.nextval;
+:new.emp_id := n;
+INSERT INTO identifier_table VALUES(n, 'emp_id');
+
+--Aliasing
+CREATE SYNONYM emp FOR aditya.emp;
+
+--Procedures
+CREATE OR REPLACE PROCEDURE aditya.inc_sal (i_empno IN NUMBER, i_inc_amt IN NUMBER) IS
+l_cnt NUMBER;
+BEGIN
+  SELECT COUNT(*) INTO l_cnt FROM emp WHERE empno = i_empno;
+  IF l_cnt = 1 THEN
+    UPDATE emp SET salary = salary + i_inc_amt WHERE empo = i_empno;
+   ELSE
+    RAISE_APPLICATION_ERROR (-20000, 'No employee with this number exists');
+END;
+/
+
+--Executing the above procedure
+EXECUTE aditya.inc_sal (5, 500);
+
+CREATE OR REPLACE PROCEDURE ins_emp (i_name IN VARCHAR2, i_salary IN NUMBER, i_deptno IN NUMBER) IS
+l_empno NUMBER;
+l_salary NUMBER;
+BEGIN
+  IF i_deptno = 30 AND i_salary < 3000 THEN
+    RAISE_APPLICATION_ERROR (-20001, 'SALARY NOT LESS THAN 3000');
+  END IF;
+  IF i_salary IS NULL THEN
+    l_salary := 1000;
+  ELSIF l_salary:= i_salary; 
+  END IF;
+  l_empno := emp_id_seq.NEXTVAL;
+  INSERT INTO emp VALUES (l_empno, i_name, i_salary, i_deptno);
+  INSERT INTO emp_hst VALUES (l_empno, i_name, l_salary, i_deptno, USER, SYSDATE, 'I');
+END;
+/
+
+--Function creation
+CREATE OR REPLACE FUNCTION ins_emp1 (i_name IN VARCHAR2, i_salary IN NUMBER, i_deptno IN NUMBER) RETURN NUMBER IS
+
+BEGIN
+--Exact steps as above procedure
+
+RETURN l_empno;
+END;
+/
+
+--Function execution
+SET SERVEROUT ON;
+DECLARE n NUMBER;
+BEGIN
+n := ins_emp1 ('Viswa', 1000, 3);
+DBMS_OUTTPUT.PUT_LINE('Employee number '||n||' inserted.');
+END;
+
+
+

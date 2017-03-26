@@ -1,0 +1,21 @@
+--Baabai lesson 18-09-2015
+CREATE TABLE student_subject
+(
+ stdent_id NUMBER
+,subject_id NUMBER
+);
+
+ALTER TABLE student_subject ADD PRIMARY KEY(student_id, subject_id);
+
+ALTER TABLE student_subject ADD FOREIGN KEY(student_id) REFERENCES student(student_id);
+
+ -same for subject_id
+
+CREATE TABLE student_subject
+(
+ student_id NUMBER
+,subject_id NUMBER
+,FOREIGN KEY(student_id) REFERENCES student(student_id)
+,FOREIGN KEY(subject_id) REFERENCES subject(subject_id)
+,PRIMARY KEY(student_id,subject_id)
+);

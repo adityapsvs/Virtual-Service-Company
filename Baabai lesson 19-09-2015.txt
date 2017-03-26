@@ -1,0 +1,143 @@
+  --programme
+DECLARE l_empno emp.empno%type;
+l_job emp.job%type;
+l_increment emp.salary%type;
+BEGIN
+l_empno := 5; (OR) l_empno := &e1;
+SELECT job INTO l_job FROM emp WHERE empno = l_empno; (OR) SELECT job, deptno INTO l_job, l_deptno FROM emp WHERE empno = l_empno;
+IF l_job = 'manager' THEN l_increment := 1000;
+ELS IF l_job = 'clerk' THEN l_inrcement := 500;
+ELS IF l_job = 'salesman' THEN l_increment := 200;
+ELSE l_increment := 100;
+END IF;
+UPDATE emp SET salary = salary+l_increment WHERE empno = l_empno;
+END;
+/
+
+DECLARE l_num NUMBER;
+BEGIN
+SELECT 24*(strt_dt-end_dt) INTO l_num FROM date_table where dt_id = 1;
+dbms_output.put_line(l_num);
+END;
+/
+
+INSERT INTO DATE_TABLE VALUES (1, TO_DATE('02-11-2015 01:00:00', 'DD-MM-YYYY HH24:MI:SS'), TO_DATE('03-11-2015 02:00:00', 'DD-MM-YYYY HH24:MI:SS'));
+
+
+--above programme practise
+DECLARE l_empno emp.empno%type;
+l_increment emp.salary%type;
+l_job emp.job%type;
+BEGIN
+l_empno := &e1
+SELECT job INTO l_job FROM emp WHERE empno = l_empno;
+IF l_job := 'manager' THEN l_increment := 1000;
+ELS IF l_job := 'clerk' THEN l_increment := 500;
+ELSE l_increment := 100;
+END IF;
+UPDATE emp SET salary = salary+l_increment WHERE empno = l_empno;
+END;
+/
+
+--same one as above
+-before declare
+SET SERVEROUT ON;
+-before select statement
+l_count NUMBER;
+SELECT COUNT(*) INTO l_count FROM emp WHERE empno = l_empno;
+IF l_count  = 1 THEN 
+  SELECT job INTO l_job FROM emp WHERE empno = l_empno; (OR) SELECT job, deptno INTO l_job, l_deptno FROM emp WHERE empno = l_empno;
+  IF l_job = 'manager' THEN l_increment := 1000;
+  ELS IF l_job = 'clerk' THEN l_inrcement := 500;
+  ELS IF l_job = 'salesman' THEN l_increment := 200;
+  ELSE l_increment := 100;
+  END IF;
+  UPDATE emp SET salary = salary+l_increment WHERE empno = l_empno; 
+ELSE 
+  DBMS_OUTPUT.PUT_LINE('This employee doesn't exist'||l_empno);
+END IF;
+END;
+/
+
+--emp TABLE
+empno salary deptno
+--emp_hst TABLE
+empno salary deptno ins_dtm ins_user db_action VARCHAR2(1)
+
+--Whenever there is an insert or update or delete on emp then there will be a corresponding record in emp_hst too.
+--Updates, deletes and inserts ate to be done from 7 AM TO 7PM
+--Whenever updating salary, old salary must be lesser than new salary
+
+--TRIGGER
+CREATE OR REPLACE TRIGGER aditya.emp_biud BEFORE INSERT OR UPDATE OR DELETE ON aditya.emp
+DECLARE
+l_hrs NUMBER(2);
+BEGIN
+l_hrs := to_number(to_char(SYSDATE, 'HH24'));
+IF l_hrs < 7 OR l_hrs >= 19 THEN RAISE_APPLICATION_ERROR(-20001, 'insert/update/delete CAN HAPPEN BETWEEN 07:00 AND 19:00');
+END IF;
+END;
+/
+
+--example query
+UPDATE emp SET SALARY=10000 WHERE EMPNO=5;
+
+--TRIGGER
+CREATE OR REPLACE TRIGGER emp_biudr BEFORE INSERT OR DELETE OR UPDATE ON aditya.emp FOR EACH ROW
+DECLARE
+
+BEGIN
+IF INSERTING THEN
+  IF (:new.deptno = 10 AND :new.salary < 1000) OR (:new.deptno = 20 AND :new.salary < 2000) OR (:new.deptno = 30 AND :new.salary < 3000) THEN
+  RAISE_APPLICATION_ERROR(-20004, 'Min salary for 10 is 1000, 20 is 2000, 30 is 3000');
+  END IF;
+
+
+
+
+
+ELS IF UPDATING THEN
+  IF (:new.salary < :old.salary) THEN RAISE_APPLICATION_ERROR(-20005, 'New salary cannot be less than old salary');
+
+
+
+
+ELS IF DELETING THEN
+  IF :old.deptno = 30 THEN RAISE_APPLICATION_ERROR(-20006, 'Dept 30s employees cannot be deleted');
+
+
+
+END IF;
+END;
+/
+
+--TRIGGER
+CREATE OR REPLACE TRIGGER aditya.emp_aiudr AFTER INSERT OR DELETE OR UPDATE ON aditya.emp FOR EACH ROW
+DECLARE
+
+BEGIN
+IF INSERTING THEN
+  INSERT INTO emp_hst VALUES(:new.empno, :)
+
+
+
+
+
+ELS IF UPDATING THEN
+
+
+
+
+ELS IF DELETING THEN
+
+
+
+
+
+
+END IF;
+END;
+/
+
+--EXAMPLE QUERY
+DELETE FROM emp WHERE deptno = 20;

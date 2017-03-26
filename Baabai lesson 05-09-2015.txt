@@ -1,0 +1,9 @@
+05-09-2015 lesson:
+In SC_CUST_SERVICE_LINK requested_on_dtm;
+requested_start_dtm;
+requested_end_dtm;
+service_start_dtm = actual_start_dtm;
+chg_amt in sc_service_mst
+hrly_chg_amt;
+In SC_CUST_SERVICE_LINK
+add emp_rating_cd and add ratings table

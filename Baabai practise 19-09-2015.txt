@@ -1,0 +1,39 @@
+CREATE TABLE emp
+(
+ empno NUMBER(3) PRIMARY KEY
+,salary NUMBER(7,2) NOT NULL
+,deptno NUMBER(3) NOT NULL
+);
+
+CREATE TABLE emp_hst
+(
+ empno NUMBER(3) NOT NULL
+,salary NUMBER(7,2) NOT NULL
+,deptno NUMBER(3) NOT NULL
+,new_salary NUMBER(7,2)
+,new_deptno NUMBER(3)
+,ins_dtm DATE NOT NULL
+,ins_user VARCHAR2(32) NOT NULL
+,db_action VARCHAR2(1) NOT NULL
+);
+
+CREATE OR REPLACE TRIGGER aditya.emp_time_biud BEFORE INSERT OR UPDATE OR DELETE ON aditya.emp
+DECLARE l_hrs NUMBER(2);
+BEGIN
+l_hrs := to_number(to_char(SYSDATE, 'hh24'));
+IF l_hrs < 7 OR l_hrs >= 19 THEN raise_application_error(-20011, 'inserts/updates/deletes are allowed only between 7:00 and 19:00');
+END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER aditya.emp_ins_emp_hst_aiudr AFTER INSERT OR UPDATE OR DELETE ON aditya.emp FOR EACH ROW
+BEGIN
+IF INSERTING THEN
+  INSERT INTO emp_hst VALUES (:new.empno, :new.salary, :new.deptno, NULL, NULL, SYSDATE, USER, 'I');
+ELSIF UPDATING THEN
+  INSERT INTO emp_hst VALUES (:old.empno, :old.salary, :old.deptno, :new.salary, :new.deptno, SYSDATE, USER, 'U');
+ELSIF DELETING THEN
+  INSERT INTO emp_hst VALUES (:old.empno, :old.salary, :old.deptno, NULL, NULL, SYSDATE, USER, 'D');
+END IF;
+END;
+/

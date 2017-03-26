@@ -1,0 +1,108 @@
+--Master tables
+person
+physical address
+email address
+phone
+job
+service
+employee
+customer
+customer order
+--link tables
+person physical address
+person email
+person phone
+employee job
+employee service
+
+-- Others
+customer order details
+customer order employee details
+payment status ref
+payment method ref
+customer order payment details
+
+--Master tables creation
+-person
+CREATE TABLE sc_prsn_mst
+(
+ prsn_id NUMBER(5) PRIMARY KEY
+,prsn_nm VARCHAR2(32) NOT NULL
+,prsn_bt_dt DATE NOT NULL
+,prsn_unq_id NOT NULL
+,CONTRAINT sc_prsn_mst_uq UNIQUE(prsn_unq_id)
+);
+
+-physical address
+
+CREATE TABLE sc_phscl_addr_mst
+(
+ addr_id NUMBER(5) PRIMARY KEY
+,addr_ln1 VARCHAR2(32) NOT NULL
+,addr_ln2 VARCHAR2(32)
+,area_nm VARCHAR2(20) NOT NULL
+,city_nm VARCHAR2(20) NOT NULL
+,state_nm VARCHAR2(20) NOT NULL
+,pstl_cd VARCHHAR2(10) NOT NULL
+);
+
+-email address
+CREATE TABLE sc_email_addr_mst
+(
+ email_addr_id NUMBER(5) PRIMARY KEY
+,email_addr VARCHAR2(32) NOT NULL
+,CONSTRAINT email_addr_mst UNIQUE(email_addr)
+);
+
+-phone
+CREATE TABLE sc_phn_nbr_mst
+(
+ phn_nbr_id NUMBER(5) PRIMARY KEY
+,phn_nbr NUMBER(10) NOT NULL
+,CONSTRAINT sc_phn_nbr_mst UNIQUE(phn_nbr)
+);
+
+-job
+CREATE TABLE sc_job_mst
+(
+ job_id NUMBER(5) PRIMARY KEY
+,job_nm VARCHAR2(32) NOT NULL
+);
+
+-service
+CREATE TABLE sc_srvc_mst
+(
+ srvc_id NUMBER(5) PRIMARY KEY
+,srvc_nm VARCHAR2(32) NOT NULL
+,srvc_chrg_per_hr NUMBER(5,2) NOT NULL
+,min_hrs_to_avail NUMBERS(4,2) NOT NULL
+);
+
+-employee
+CREATE TABLE sc_emp_mst
+(
+ emp_id NUMBER(5) PRIMARY KEY
+,prsn_id NUMBER(5)
+,eff_strt_ge_dtm DATE NOT NULL
+,eff_end_lt_dtm DATE
+,CONSTRAINT FOREIGN KEY(prsn_id) REFERENCES sc_prsn_mst(prsn_id)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

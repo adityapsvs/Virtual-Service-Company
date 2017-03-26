@@ -1,0 +1,6 @@
+IF INSERTING THEN :new.emp_id := emp_id_seq.nextval;
+
+--SEQUENCE
+CREATE SEQUENCE emp_id_seq
+START WITH 1001
+INCREMENT BY 2;

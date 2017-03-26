@@ -1,0 +1,7 @@
+Problem Summary
+---------------
+Create an application that provides various services to the Company customers.
+
+Services: Washing, Cooking, Shopping etc.
+Employees: Employees of this company have expertice in different services.
+Customers: Who opts for services from this comopany.

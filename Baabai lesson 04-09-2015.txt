@@ -1,0 +1,70 @@
+merge workers and admin table into staff table.
+
+addresses:
+addr_id		addr_ln1	addr_ln2
+
+cust_addr:
+cust_id		addr_id		priorty_nbr		active_yn		eff_frm_dtm		eff_to_dtm
+
+staff_addr:
+staff_id	addr_id		priorty_nbr		active_yn
+
+/*
+persons:
+per_id		per_nm		per_dob
+
+addresses:
+addr_id		ln1		ln2
+
+person_addresses:
+per_id		addr_id		priorty_nbr		active_yn
+
+emps:
+emp_id		per_id		emp_strt_dt		emp_end_dt
+71		150
+
+cust:
+cust_id		per_id
+101		150
+
+email_addrs:
+email_addr_id		email_addr
+
+person_email:
+per_id		email_addr_id		eff_frm_dtm		eff_to_dtm		priorty_nbr
+
+phn_nbrs:
+phn_nbr_id	phn_w		phn_h
+
+
+
+
+
+tables:
+persons
+addresses
+phn_nbrs
+fax_nbrs
+email_addrs
+
+link tables:
+person_addrs
+per_phn_nbrs
+per_fax_nbrs
+per_email_addrs
+
+cust
+cust_id		per_id		cust_strt_dtm		cust_end_dtm
+staff
+staff_id	per_id
+designation
+desig_id	desig_nm
+staff_desig pk=? If one person can do only one job at a particular period, then pk must be checked during programming
+staff_id	desig_id	start_dtm	end_dtm
+1		j1		1-1-2010	1-1-2012
+1		j2		1-1-2011	unlimited
+1		j3		1-1-2011	unlimited
+In programme, we will write the trigger and check that.
+
+
+
